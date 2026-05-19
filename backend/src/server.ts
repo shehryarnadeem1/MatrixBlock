@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 // Enable CORS and JSON parsing
 app.use(cors());
@@ -254,11 +254,11 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // Boot server
-app.listen(PORT, () => {
+app.listen(Number(PORT), "0.0.0.0", () => {
   console.log(`=============================================================`);
   console.log(`🚀 MatrixBlocks Backend API Server running on port ${PORT}`);
   console.log(`🔌 Endpoints:`);
-  console.log(`   - GET  http://localhost:${PORT}/api/models`);
-  console.log(`   - POST http://localhost:${PORT}/api/purchase`);
+  console.log(`   - GET  /api/models`);
+  console.log(`   - POST /api/purchase`);
   console.log(`=============================================================`);
 });
