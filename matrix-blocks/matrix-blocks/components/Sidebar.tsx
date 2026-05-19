@@ -46,12 +46,14 @@ export default function Sidebar() {
       {isOpen && (
         <div 
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300 animate-fade-in"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
         />
       )}
       
-      <aside className={`fixed md:sticky inset-y-4 md:inset-y-auto left-4 md:left-4 z-50 md:z-10 w-68 h-[calc(100vh-2rem)] flex flex-col justify-between p-6 rounded-2xl glass-panel bg-[#030007]/90 md:bg-white/5 backdrop-blur-xl md:backdrop-blur-md border border-white/10 select-none shadow-2xl transform transition-transform duration-300 ease-out ${
-        isOpen ? "translate-x-0" : "-translate-x-[110%] md:translate-x-0"
+      <aside className={`fixed md:sticky inset-y-4 md:inset-y-auto left-4 md:left-4 z-50 md:z-10 w-68 h-[calc(100vh-2rem)] flex flex-col justify-between p-6 rounded-2xl glass-panel bg-zinc-950/40 md:bg-white/5 backdrop-blur-xl md:backdrop-blur-md border select-none transform transition-all duration-500 [transition-timing-function:cubic-bezier(0.4,0,0.2,1)] ${
+        isOpen 
+          ? "translate-x-0 shadow-[0_0_30px_rgba(147,51,234,0.15)] border-purple-500/20" 
+          : "-translate-x-[110%] md:translate-x-0 shadow-2xl border-white/10"
       }`}>
         
         {/* Brand Logo */}
