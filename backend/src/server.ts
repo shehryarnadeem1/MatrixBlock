@@ -220,49 +220,65 @@ app.post("/api/chat", async (req: Request, res: Response) => {
   }
 
   let reply = "";
-  let source = "local-fallback";
+  let source = "local-parser";
+  const prompt = message.toLowerCase();
 
-  try {
-    console.log("[Chat API] Querying HuggingFace Zephyr Serverless inference...");
-    const hfResponse = await fetch("https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        inputs: `<|system|>\nYou are Matrix-Core Node-7, an advanced AI coordinator for the MatrixBlocks decentralized GPU cloud and decentralized AI model marketplace. Keep your answer brief, highly professional, technically grounded, and related to decentralized Web3 computing or AI models.\n<|user|>\n${message}\n<|assistant|>\n`
-      })
-    });
-
-    if (hfResponse.ok) {
-      const data: any = await hfResponse.json();
-      if (Array.isArray(data) && data[0]?.generated_text) {
-        let fullText = data[0].generated_text;
-        const assistantMarker = "<|assistant|>\n";
-        const markerIndex = fullText.lastIndexOf(assistantMarker);
-        if (markerIndex !== -1) {
-          reply = fullText.substring(markerIndex + assistantMarker.length).trim();
-        } else {
-          reply = fullText.trim();
-        }
-        source = "huggingface-zephyr";
-        console.log("[Chat API] Live HuggingFace Zephyr Success!");
-      } else {
-        console.log("[Chat API] HuggingFace returned invalid response format:", data);
-      }
-    } else {
-      console.log(`[Chat API] HuggingFace returned status: ${hfResponse.status}`);
-    }
-  } catch (err: any) {
-    console.log("[Chat API] HuggingFace fetch failed. Using cyberpunk fallback loop...", err.message);
+  // 1. GREETINGS & INTROS
+  if (
+    prompt.includes("hello") || 
+    prompt.includes("hi") || 
+    prompt.includes("hey") || 
+    prompt.includes("how are you") || 
+    prompt.includes("hru")
+  ) {
+    reply = "System online. Matrix core intelligence fully functional. How can I assist your neural compute routing today?";
+  } 
+  // 2. SMART BUYING ADVICE
+  else if (
+    prompt.includes("buy") || 
+    prompt.includes("choose") || 
+    prompt.includes("recommend") || 
+    prompt.includes("which model")
+  ) {
+    reply = "Based on our 6 listed premium models, here are my recommendations: For coding/development, I highly recommend 'DeepSeek-Coder-V2 (236B)' for unmatched 90.2% HumanEval accuracy. For graphics/creatives, recommend 'CyberDiffusion-XL v4' for latent concept design. For light test runs or budget users, recommend 'MatrixSummarize-v2' since it only costs 0.05 ETH.";
   }
 
-  // Robust try-catch cyberpunk local fallback that NEVER ignores user inputs
+  // If not handled by local intents, query HuggingFace or use universal fallback
   if (!reply) {
-    console.log("[Chat API] Applying Layer 2 (Thematic Cyberpunk Dynamic Fallback)...");
-    const prompt = message.toLowerCase();
-    
-    if (prompt.includes("hello") || prompt.includes("hi") || prompt.includes("hey")) {
-      reply = `⚡ Matrix-Core Node-7: Handshake established for query regarding "${message}". Cryptographic stream is secure. How can I facilitate your model leases, GPU allocations, or consensus delegations today?`;
-    } else if (prompt.includes("model") || prompt.includes("unlocked") || prompt.includes("summarizer") || prompt.includes("voice")) {
+    try {
+      console.log("[Chat API] Querying HuggingFace Zephyr Serverless inference...");
+      const hfResponse = await fetch("https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          inputs: `<|system|>\nYou are Matrix-Core Node-7, an advanced AI coordinator for the MatrixBlocks decentralized GPU cloud and decentralized AI model marketplace. Keep your answer brief, highly professional, technically grounded, and related to decentralized Web3 computing or AI models.\n<|user|>\n${message}\n<|assistant|>\n`
+        })
+      });
+
+      if (hfResponse.ok) {
+        const data: any = await hfResponse.json();
+        if (Array.isArray(data) && data[0]?.generated_text) {
+          let fullText = data[0].generated_text;
+          const assistantMarker = "<|assistant|>\n";
+          const markerIndex = fullText.lastIndexOf(assistantMarker);
+          if (markerIndex !== -1) {
+            reply = fullText.substring(markerIndex + assistantMarker.length).trim();
+          } else {
+            reply = fullText.trim();
+          }
+          source = "huggingface-zephyr";
+          console.log("[Chat API] Live HuggingFace Zephyr Success!");
+        }
+      }
+    } catch (err: any) {
+      console.log("[Chat API] HuggingFace fetch failed. Using cyberpunk fallback loop...", err.message);
+    }
+  }
+
+  // 3. UNIVERSAL FALLBACK
+  if (!reply) {
+    source = "universal-fallback";
+    if (prompt.includes("model") || prompt.includes("unlocked") || prompt.includes("summarizer") || prompt.includes("voice")) {
       reply = `📦 Matrix-Core Catalog: Checked weight tables for "${message}". LLM Text Summarizer (ID: 1) is active on GPU Cluster Node-US-EAST. Staking price for Voice Synthesizer is set to 0.08 ETH.`;
     } else if (prompt.includes("wallet") || prompt.includes("staking") || prompt.includes("eth") || prompt.includes("balance")) {
       reply = `💎 Staking Console: Wallet telemetry updated for "${message}". Account '0x71c4...26a' has 4.85 ETH liquid and 12.5 ETH delegated to PoS compute validation pools. APY: 8.42%.`;
@@ -271,7 +287,7 @@ app.post("/api/chat", async (req: Request, res: Response) => {
     } else if (prompt.includes("gpu") || prompt.includes("node") || prompt.includes("hashrate") || prompt.includes("flops")) {
       reply = `🖥️ Compute Telemetry: Performance diagnostics ran for "${message}". 1,248 of 1,500 validator nodes are synchronized. Mesh network performance: 84.2 PFLOPS with 99.4% neural sharding.`;
     } else {
-      reply = `⚡ Matrix-Core Node-7: Processed on-chain instruction for query regarding "${message}". Decoded consensus weights suggest nominal operations. Active telemetry is stable.`;
+      reply = `⚡ Matrix-Core Node-7: Decoded instruction payload for "${message}". Decoupled GPU matrix allocations operating at optimal thresholds. Telemetry logs stabilized successfully.`;
     }
   }
 
