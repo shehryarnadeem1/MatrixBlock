@@ -17,6 +17,58 @@ app.use(express_1.default.json());
 const mockModels = [
     {
         id: 1,
+        name: "DeepSeek-Coder-V2 (236B)",
+        description: "State-of-the-art open-source mixture-of-experts code synthesis model, fine-tuned on over 2.4T code tokens for exceptional performance in 80+ programming languages.",
+        category: "Code Generation",
+        creator: "0x892a014902F17c8B4adC3C1C288bEE98C0898516",
+        ipfsHash: "ipfs://QmDeepSeekCoderV2236BNeuralWeightsSubnetXG",
+        priceEth: "0.25",
+        modelSize: "236 GB",
+        parameters: "236B MoE (21B active)",
+        accuracy: "90.2% HumanEval",
+        license: "DeepSeek License"
+    },
+    {
+        id: 2,
+        name: "CyberDiffusion-XL v4",
+        description: "Stunning generative latent art diffusion model capable of producing breathtaking 8K cyberpunk concept art, dynamic neural gradients, and glassmorphic vector UI components.",
+        category: "Computer Vision",
+        creator: "0xf839446B8cd59a04E37A2066E0CDE915904F2F11",
+        ipfsHash: "ipfs://QmCyberDiffusionXLv4NeuralArtworkWeights7",
+        priceEth: "0.15",
+        modelSize: "6.8 GB",
+        parameters: "15B parameters",
+        accuracy: "FID 7.21",
+        license: "Creative Commons BY-NC"
+    },
+    {
+        id: 3,
+        name: "QuantumNeuron-70B",
+        description: "High-performance general reasoning large language model optimized for logical deduction, mathematical proofs, and complex cryptographic code analysis.",
+        category: "Natural Language Processing",
+        creator: "0xEbc2A803C1C288bEE98C08985160x892a014902F17c8B4ad",
+        ipfsHash: "ipfs://QmQuantumNeuron70BHighPerformanceTransformer",
+        priceEth: "0.18",
+        modelSize: "70 GB",
+        parameters: "70B parameters",
+        accuracy: "88.9% MMLU",
+        license: "Llama 3 Community"
+    },
+    {
+        id: 4,
+        name: "AlphaZero-Heuristic-V5",
+        description: "Self-training reinforcement learning model specialized in heuristic game trees, chess/go engine branches, dynamic path planning, and advanced consensus yield optimization.",
+        category: "Reinforcement Learning",
+        creator: "0x71C46c6453a29e123a29331F08c69aA62429a26A",
+        ipfsHash: "ipfs://QmAlphaZeroHeuristicV5ConsensusPathFinding",
+        priceEth: "0.32",
+        modelSize: "350 MB",
+        parameters: "800M parameters",
+        accuracy: "99.8% WinRate vs GM",
+        license: "Apache 2.0"
+    },
+    {
+        id: 5,
         name: "LLM Text Summarizer (MatrixSummarize-v2)",
         description: "Highly optimized transformer-based summarization model designed for speed and precise abstractive synthesis of multi-page PDF documents.",
         category: "Natural Language Processing",
@@ -29,20 +81,7 @@ const mockModels = [
         license: "MIT"
     },
     {
-        id: 2,
-        name: "Diffusion Art Generator (MatrixArt-v4)",
-        description: "Latent text-to-image diffusion model capable of producing stunning 4K hyper-realistic digital artwork and abstract neural patterns.",
-        category: "Computer Vision",
-        creator: "0xf839446B8cd59a04E37A2066E0CDE915904F2F11",
-        ipfsHash: "ipfs://QmY8A19v9YgA6vN6pG35xR9QjWp7TzQmXGTyTzTznk76U9",
-        priceEth: "0.12",
-        modelSize: "4.5 GB",
-        parameters: "12B parameters",
-        accuracy: "FID 8.4",
-        license: "Creative Commons BY-NC"
-    },
-    {
-        id: 3,
+        id: 6,
         name: "Real-time Voice Synthesizer (MatrixVoice)",
         description: "Ultra-low latency speech synthesizer creating high-fidelity natural speaking voices with complex emotional modulation and accent adjustments.",
         category: "Audio Processing",
