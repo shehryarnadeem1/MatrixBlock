@@ -21,6 +21,8 @@ interface TabContextType {
   isWeb3Connected: boolean;
   isWeb3Connecting: boolean;
   connectWeb3: () => Promise<string | null>;
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: (open: boolean) => void;
 }
 
 const TabContext = createContext<TabContextType | undefined>(undefined);
@@ -38,6 +40,7 @@ export function TabProvider({ children }: { children: React.ReactNode }) {
   const [web3Balance, setWeb3Balance] = useState<string>("4.85 ETH");
   const [isWeb3Connected, setIsWeb3Connected] = useState<boolean>(false);
   const [isWeb3Connecting, setIsWeb3Connecting] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   const showToast = (message: string, type: "info" | "success" | "warning" = "info") => {
     setToast({ show: true, message, type });
@@ -161,7 +164,9 @@ export function TabProvider({ children }: { children: React.ReactNode }) {
       web3Balance,
       isWeb3Connected,
       isWeb3Connecting,
-      connectWeb3
+      connectWeb3,
+      isMobileMenuOpen,
+      setIsMobileMenuOpen
     }}>
       {children}
     </TabContext.Provider>
