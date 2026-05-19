@@ -32,7 +32,7 @@ export default function Sidebar() {
   const { activeTab, setActiveTab, showToast, web3Address, isWeb3Connected, connectWeb3 } = useTab();
 
   return (
-    <aside className="w-68 h-[calc(100vh-2rem)] sticky top-4 left-4 flex flex-col justify-between p-6 rounded-2xl glass-panel bg-white/5 backdrop-blur-md border border-white/10 z-10 select-none shadow-2xl">
+    <aside className="hidden md:flex w-68 h-[calc(100vh-2rem)] sticky top-4 left-4 flex-col justify-between p-6 rounded-2xl glass-panel bg-white/5 backdrop-blur-md border border-white/10 z-10 select-none shadow-2xl">
       
       {/* Brand Logo */}
       <div className="flex flex-col gap-2">
